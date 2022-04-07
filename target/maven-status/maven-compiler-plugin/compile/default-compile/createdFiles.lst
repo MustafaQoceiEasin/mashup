@@ -1,3 +1,2 @@
-com\mustafa\mashup\service\MusicBrainzService.class
 com\mustafa\mashup\service\CoverArtService.class
 com\mustafa\mashup\entity\musicbrainz\Artist.class
