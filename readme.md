@@ -5,7 +5,7 @@
 
 ### Link to github repo : https://github.com/MustafaQoceiEasin/mashup
 
-### To start, use command : __**mvn spring-boot:run**__
+### To start, use command : __**mvn spring-boot:run**__ , can be used in postman and in browser, but postman creates a prettier, more readable json structure
 
 # About :
 
