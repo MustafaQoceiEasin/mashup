@@ -7,7 +7,7 @@
 
 ### To start, use command : __**mvn spring-boot:run**__
 
-#About :
+# About :
 
 ### This REST API will take in an MBID(musicbrainz identifier) , look up an artist on the musicbrainz API and return information about the artist, and a list of released albums. You will also find urls that contain a wiki identifier.
 
@@ -20,8 +20,8 @@
 ### All this information is combined to return a long json response body with the combined information about the artist
 
 
-#Frameworks and libraries
+# Frameworks and libraries
 ### The libary used for making the api calls is the built in library in spring-boot called RestTemplate.
-#Negative
-###RestTemplate makes synchronous calls, which made this REST API very slow when it's used on cover arts API, since cover arts API had redirected links.
-###Each request sent will take about 50 seconds for a response
+# Negative
+### RestTemplate makes synchronous calls, which made this REST API very slow when it's used on cover arts API, since cover arts API had redirected links.
+### Each request sent will take about 50 seconds for a response
