@@ -2,11 +2,11 @@
 
 ### Created in Java with spring boot.
 ### Link to postman example requests : https://www.postman.com/speeding-meadow-346025/workspace/mashup -- the requests for this api is under "mashup" collection
-
+### API can be used in postman and in browser, but postman creates a prettier, more readable json structure
 ### Link to github repo : https://github.com/MustafaQoceiEasin/mashup
 
 ### Before starting, use command : mvn clean package
-### To start, use command : __**mvn spring-boot:run**__ , can be used in postman and in browser, but postman creates a prettier, more readable json structure
+### To start, use command : __**mvn spring-boot:run**__ , or start the main class "MashupApplication".
 
 # About :
 
