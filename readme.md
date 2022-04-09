@@ -22,4 +22,4 @@
 
 # Frameworks and libraries
 ### The libary used for making the api calls is the built in library in spring-boot called Webclient.
-
+### JDK 8+
