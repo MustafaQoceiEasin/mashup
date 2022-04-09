@@ -8,7 +8,7 @@
 ### Before starting, use command : mvn clean package
 ### To start, use command : __**mvn spring-boot:run**__ , or start the main class "MashupApplication". 
 
-### First request might take a bit longer because the webclient is being built
+### First request might take a bit longer because of Nettys connection establishment
 
 # About :
 
