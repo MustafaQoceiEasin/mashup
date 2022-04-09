@@ -12,18 +12,18 @@ import java.util.Map;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Configurable
 public class WikiService {
 
-  private final String ARTIST_URL = URLStringService.getArtistURL();
+  private final String MUSICBRAINZ_API_URL = URLStringService.getMusicBrainzApiUrl();
   private final String RELS_JSON_URL = URLStringService.getJsonRelsURL();
-  private final String WIKIDATA_URL = URLStringService.getWikidataIdentifierUrl();
+  private final String WIKIDATA_API_URL = URLStringService.getWikidataApiUrl();
   private final String WIKI_SITELINK_URL = URLStringService.getWikidataSitelinksUrl();
-  private final String WIKIPEDIA_URL = URLStringService.getWikipediaUrl();
-  private RestTemplate restTemplate;
+  private final String WIKIPEDIA_URL = URLStringService.getWikipeidaTitleUrl();
+  private WebClient webClient;
   private ObjectMapper objectMapper;
   private List<Relation> relationsList;
   private Artist artist;
@@ -37,25 +37,37 @@ public class WikiService {
 
 
   public String getWikipediaDescription(final String mbid) throws IOException {
-    restTemplate = HttpRequestFactoryService.createRestTemplate();
+    webClient = WebClientFactoryService.createWebClient();
     //Get wikidata url that has the wikidata identifier for the artist wikipedia page
-    artist = restTemplate.getForObject(ARTIST_URL + mbid + RELS_JSON_URL, Artist.class);
+      artist = webClient
+          .get()
+          .uri(MUSICBRAINZ_API_URL + mbid + RELS_JSON_URL)
+          .retrieve()
+          .bodyToMono(Artist.class)
+          .block();
+
     relationsList = artist.getRelations();
     for(int i=0; i< relationsList.size(); i++) {
-      if(relationsList.get(i).getUrl().getResource().startsWith(WIKIDATA_URL)) {
+      if(relationsList.get(i).getUrl().getResource().startsWith(WIKIDATA_API_URL)) {
         relation = relationsList.get(i);
         //remove the url and keep only the identifier
-        wikiIdentifier = relation.getUrl().getResource().replaceAll(WIKIDATA_URL,"");
+        wikiIdentifier = relation.getUrl().getResource().replaceAll(WIKIDATA_API_URL,"");
         LoggerService.writeInfoMsg("GOT WIKI IDENTIFIER : " + wikiIdentifier);
       }
     }
 
-    wikidata = restTemplate.getForObject(WIKI_SITELINK_URL + wikiIdentifier, Wikidata.class);
+    wikidata = webClient
+        .get()
+        .uri(WIKI_SITELINK_URL + wikiIdentifier)
+        .retrieve()
+        .bodyToMono(Wikidata.class)
+        .block();
+
     identifierMap = wikidata.getData();
     //Map dynamic id as value, get json responsebody
     identifierMap.put(wikidata,wikiIdentifier);
 
-    objectMapper = HttpRequestFactoryService.createObjectMapper();
+    objectMapper = new ObjectMapper();
     try {
       //Convert Map to JSON String
       String jsonString = objectMapper.writeValueAsString(identifierMap);
@@ -75,7 +87,13 @@ public class WikiService {
     }
 
     //Wikipedia url to get description, mapping json as object
-    wikipedia = restTemplate.getForObject(WIKIPEDIA_URL + wikipediaTitle, Wikipedia.class);
+    wikipedia = webClient
+        .get()
+        .uri(WIKIPEDIA_URL +wikipediaTitle)
+        .retrieve()
+        .bodyToMono(Wikipedia.class)
+        .block();
+
     wikipedia.add("",wikipedia);
 
     //removing html tags and json keys from description

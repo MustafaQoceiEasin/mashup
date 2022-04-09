@@ -21,7 +21,5 @@
 
 
 # Frameworks and libraries
-### The libary used for making the api calls is the built in library in spring-boot called RestTemplate.
-# Negative
-### RestTemplate makes synchronous calls, which made this REST API very slow when it's used on cover arts API, since cover arts API had redirected links.
-### Each request sent will take about 50 seconds for a response
+### The libary used for making the api calls is the built in library in spring-boot called Webclient.
+

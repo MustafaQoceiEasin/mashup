@@ -1,2 +1,17 @@
+com\mustafa\mashup\MashupApplication.class
+com\mustafa\mashup\entity\wiki\Url.class
+com\mustafa\mashup\entity\wiki\Wikipedia.class
+com\mustafa\mashup\entity\wiki\Relation.class
+com\mustafa\mashup\service\LoggerService.class
+com\mustafa\mashup\service\MashupService.class
+com\mustafa\mashup\service\URLStringService.class
+com\mustafa\mashup\entity\musicbrainz\Album.class
 com\mustafa\mashup\service\CoverArtService.class
 com\mustafa\mashup\entity\musicbrainz\Artist.class
+com\mustafa\mashup\controller\MashupController.class
+com\mustafa\mashup\entity\coverart\CoverArt.class
+com\mustafa\mashup\service\WikiService.class
+com\mustafa\mashup\entity\coverart\Image.class
+com\mustafa\mashup\service\HttpRequestFactoryService$1.class
+com\mustafa\mashup\entity\wiki\Wikidata.class
+com\mustafa\mashup\service\HttpRequestFactoryService.class

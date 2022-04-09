@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Configurable
 public class MashupService {
 
-  private final String ARTIST_URL = URLStringService.getArtistURL();
+  private final String MUSICBRAINZ_API_URL = URLStringService.getMusicBrainzApiUrl();
   private final String JSON_RELEASEGROUPS_URL = URLStringService.getJsonReleaseGroupsURL();
-  private RestTemplate restTemplate;
+  private WebClient webClient;
   private Artist artist;
   private Album album;
   private List<Album> oldAlbumList;
@@ -32,9 +32,14 @@ public class MashupService {
   private WikiService wikidataService;
 
   public Artist fetchArtistInformation(final String mbid) {
-    restTemplate = HttpRequestFactoryService.createRestTemplate();
+    webClient = WebClientFactoryService.createWebClient();
     try {
-      artist = restTemplate.getForObject(ARTIST_URL + mbid + JSON_RELEASEGROUPS_URL, Artist.class);
+      artist = webClient
+          .get()
+          .uri(MUSICBRAINZ_API_URL + mbid + JSON_RELEASEGROUPS_URL)
+          .retrieve()
+          .bodyToMono(Artist.class)
+          .block();
     }catch (HttpClientErrorException | NullPointerException e) {
       LoggerService.writeErrorMsg("COULD NOT FIND ARTIST WITH MBID : " + mbid);
     }

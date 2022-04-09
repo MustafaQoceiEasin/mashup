@@ -1,0 +1,4 @@
+com\mustafa\mashup\service\WikiServiceIT.class
+com\mustafa\mashup\MashupApplicationTests.class
+com\mustafa\mashup\service\CoverArtServiceIT.class
+com\mustafa\mashup\service\MashupServiceIT.class

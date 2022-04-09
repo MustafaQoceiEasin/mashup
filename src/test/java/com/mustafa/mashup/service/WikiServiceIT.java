@@ -3,21 +3,19 @@ package com.mustafa.mashup.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.mustafa.mashup.entity.coverart.CoverArt;
 import com.mustafa.mashup.entity.musicbrainz.Artist;
-import com.mustafa.mashup.entity.wiki.Wikidata;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientException;
 
 @SpringBootTest
 public class WikiServiceIT {
   private final String ARTIST_MBID = "5b11f4ce-a62d-471e-81fc-a69a8278c7da";
-  private RestTemplate restTemplate;
+  private WebClient webClient;
   private Artist artist;
 
   @Autowired
@@ -25,12 +23,17 @@ public class WikiServiceIT {
 
   @BeforeEach
   void setup () {
-    restTemplate = HttpRequestFactoryService.createRestTemplate();
+   webClient = WebClientFactoryService.createWebClient();
   }
 
   @Test
   void shouldFindWikidata() {
-    artist = restTemplate.getForObject(URLStringService.getArtistURL() + ARTIST_MBID + URLStringService.getJsonReleaseRelsUrl() ,Artist.class);
+    artist = webClient
+        .get()
+        .uri(URLStringService.getMusicBrainzApiUrl() + ARTIST_MBID + URLStringService.getJsonReleaseRelsUrl())
+        .retrieve()
+        .bodyToMono(Artist.class)
+        .block();
 
     assertThat(artist).isNotNull();
     assertThat(artist.getRelations()).isNotEmpty();
@@ -40,12 +43,17 @@ public class WikiServiceIT {
   void shouldFailToFindWikidataIdentifier() {
     String faultyMBID = ARTIST_MBID + "abcde";
 
-    Exception exception = assertThrows(HttpClientErrorException.class, () -> {
-      artist = restTemplate.getForObject(URLStringService.getArtistURL() + faultyMBID + URLStringService.getJsonReleaseRelsUrl() ,Artist.class);
+    Exception exception = assertThrows(WebClientException.class, () -> {
+      artist = webClient
+          .get()
+          .uri(URLStringService.getMusicBrainzApiUrl() + faultyMBID + URLStringService.getJsonReleaseRelsUrl())
+          .retrieve()
+          .bodyToMono(Artist.class)
+          .block();
     });
 
 
-     Assertions.assertTrue(exception.getMessage().startsWith("400"));
+     Assertions.assertTrue(exception.getMessage().startsWith("4"));
   }
 
 }
