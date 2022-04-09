@@ -7,9 +7,9 @@ C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\servic
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\entity\musicbrainz\Artist.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\controller\MashupController.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\service\LoggerService.java
+C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\service\WebClientFactoryService.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\service\MashupService.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\entity\wiki\Wikipedia.java
-C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\service\HttpRequestFactoryService.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\entity\wiki\Url.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\service\WikiService.java
 C:\Users\Mustafa\Documents\Github\mashup\src\main\java\com\mustafa\mashup\entity\coverart\CoverArt.java
