@@ -22,5 +22,4 @@
 
 
 # Frameworks and libraries
-### The libary used for making the api calls is a library called Webclient.
-### JDK 8+
+### The libary used for making the async API calls is called WebClient
